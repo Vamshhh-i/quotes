@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+    <style>
+        body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(270deg, #ccc, rgb(123, 123, 237), #a1c4fd, rgb(123, 123, 237),#ccc);
+
+      animation:alternate-reverse 2s infinite;
+      background-color: #f4f4f4;
+      padding: 30px;
+      text-align: center;
+    }
+    h2 {
+      color:#03151e;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background-color: #086c1e;
+    }
+    #parent {
+      margin-top: 30px;
+      background: linear-gradient(45deg,#ccc, #a1c4fd);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 25px 25px rgba(0,0,0,0.1);
+    }
+    </style>
+</head>
+<body>
+    <h2>Quotes</h2>
+    <button type="hidden" id="load" onclick="loadPosts()">Get New Quote</button>
+    <div id="parent">
+      <h3>"consistency is key"</h3>
+      <h4>-vam</h4>
+    </div>
+
+    <script>
+        function loadPosts() {
+            const parentDiv = document.getElementById("parent");
+            fetch("https://jacintodesign.github.io/quotes-api/data/quotes.json")
+                .then(response => response.json())
+                .then(data => {
+                    const randomIndex = Math.floor(Math.random() * data.length);
+                    const quote = data[randomIndex];
+                    parentDiv.innerHTML = `
+                        <h3>"${quote.text}"</h3>
+                        <p>By -  "${quote.author}"</p>
+                    `;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    </script>
+</body>
+</html>
